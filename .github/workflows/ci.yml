@@ -1,0 +1,41 @@
+name: Deploy blog
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+        fetch-depth: 0
+        ref: ${{ github.head_ref }}
+
+    - name: Security Scan
+      uses: edplato/trufflehog-actions-scan@master
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.109.0'
+        extended: true
+
+    - name: Health check
+      run: |
+        date +"%Y-%m-%d %H:%M:%S.%N" > static/health.html
+
+    - name: Build
+      run: hugo --minify
+
+    - name: add nojekyll
+      run: touch ./public/.nojekyll
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
