@@ -34,15 +34,15 @@ HeartBeat是我司的内部项目，其是一种了解项目交付情况的工�
 
 那如何快速查看工作流程结果呢？ 这里将以HeartBeat CI/CD部署为例，查看工作流程结果。
   - 进入GitHub仓库主页，单击 Actions
-  ![alt 属性文本](GitActionImages/GitActionIcon.png "GitActionIcon")
+  ![alt 属性文本](./GitActionImages/GitActionIcon.png "GitActionIcon")
   - 在左侧边栏中，单击要显示的工作流.
-  ![alt 属性文本](GitActionImages/GitActionJobs.png "GitActionJobs")
+  ![alt 属性文本](./GitActionImages/GitActionJobs.png "GitActionJobs")
   - 从工作流程运行列表中，单击要查看的运行名称，以为“frontend checked举例，正在测试 GitHub Actions”。
-  ![alt 属性文本](GitActionImages/DetailSteps.png "DetailSteps")
+  ![alt 属性文本](./GitActionImages/DetailSteps.png "DetailSteps")
   - 日志显示每个步骤是如何处理的。展开任何步骤以查看其详细信息。
-   ![alt 属性文本](GitActionImages/DetailInfoAboutEachStep.png "DetailInfoAboutEachStep")
+   ![alt 属性文本](./GitActionImages/DetailInfoAboutEachStep.png "DetailInfoAboutEachStep")
   - 以下是HeartBeat完整CI/CD workFlows
-    ![alt 属性文本](GitActionImages/BuildAndDeploy.png "BuildAndDeploy")
+    ![alt 属性文本](./GitActionImages/BuildAndDeploy.png "BuildAndDeploy")
 Deadline 2023-05-10
 
 
