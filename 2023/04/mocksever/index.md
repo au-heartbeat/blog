@@ -41,16 +41,42 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
 搭Mock Server的方式有很多种，以下是一些常见的方式：
 
 1. 使用Mock Server框架：有许多专门用于搭建Mock Server的框架可供选择，例如MockServer、Prism、WireMock等。这些框架提供了简单易用的接口和配置
-选项，可以快速搭建和配置Mock Server。  
-   **常用框架**  
-   - xx
-   - xx
-   - xx
+选项，可以快速搭建和配置Mock Server。
 
 2. 自定义代码：可以使用编写程序语言（如Java、Python、Node.js等）来编写自定义的模拟服务器，处理来自客户端的请求，并返回预定义的响应。
 
 3. 使用API开发工具：一些API开发工具（如Postman、Swagger等）提供了Mock Server的功能。可以使用这些工具创建和管理Mock API，并根据需要配备设置请
 求和响应。
+****
+### 常用框架
+
+1. **MockServer**  
+   MockServer 是一个开源模拟服务器框架，允许开发人员模拟 API 的行为。它为模拟 HTTP、HTTPS 和其他协议提供了一个强大而灵活的平台，使其适用于测试
+和开发目的。对于通过 HTTP 或 HTTPS 集成的任何系统，MockServer 可用作：
+   - 模拟服务器：可以配置MockServer以针对不同的请求返回特定的响应。通过模拟真实系统的行为，MockServer能够提供一致和可控的响应，以便进行系统间的
+集成测试或开发。 
+   - 代理服务器：MockServer可以作为代理服务器使用，记录并可选择性地修改请求和响应。它可以拦截客户端发送的请求，并将其转发到实际的目标服务器，同时
+还可以记录请求和响应的详细信息。这对于调试和监视请求的流量以及对请求和响应进行自定义处理非常有用。 
+   - 同时作为代理和模拟服务器：MockServer可以同时充当代理服务器和模拟服务器。这意味着它可以根据请求的类型将其转发到实际的目标服务器或返回预定义的
+响应。这种灵活性使得可以在同一个系统中同时模拟一部分请求并代理另一部分请求，以满足不同的测试或开发需求。 
+
+   对于每个接收到的请求，会按照以下步骤进行处理： 
+   - 查找匹配的预期并执行相应的操作。 
+   - 如果没有匹配的预期，则将请求作为代理请求。 
+   - 如果不是代理请求，则返回 404 响应。  
+
+   MockServer 支持以下操作：   
+   - 当请求符合预期时返回"模拟"响应  
+     <img src="mockserverImages/retuen-mock-response.png" alt="retuen mock response" style="zoom:35%;" align=center/>
+   - 当请求符合预期时转发请求（即动态端口转发代理）  
+     <img src="mockserverImages/farword-request.png" alt="farword request" style="zoom:35%;" align=center/>
+   - 当请求匹配预期时执行回调，允许动态创建响应  
+     <img src="mockserverImages/dynamical-response.png" alt="dynamical response" style="zoom:35%;" align=center/>
+   - 当请求符合预期时返回无效响应或关闭连接  
+     <img src="mockserverImages/invalid-response.png" alt="invalid response" style="zoom:35%;" align=center/>
+  
+2. xx
+3. xx
 
 ## Stub Server
 
