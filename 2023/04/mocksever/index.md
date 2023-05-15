@@ -1,21 +1,21 @@
 # Mock Server and Stub Server
 
 
-# 概述
+## 概述
 
 在软件开发和测试过程中，为了提高效率并减少对实际服务的依赖，我们常常使用存根服务器（Stub Server）和模拟服务器（Mock Server）这两种工具。存根服务
 器和模拟服务器都是用于模拟外部依赖项的行为，但它们有不同的实现方式和用途。  
 
 本文将介绍存根服务器和模拟服务器的概念、为什么要使用存根服务器和模拟服务器，它们的优势和用途，以及如何在开发和测试中使用它们来提高效率和可靠性。  
 
-# Mock Server
+## Mock Server
 
-## 什么是Mock Server？
+### 什么是Mock Server？
 
 Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过模拟真实的服务，为来自客户端的请求提供真实响应。在开发和测试中，Mock Server发挥着重要的
 作用。 它可以在本地计算机或云服务器上运行，拦截应用程序发出的请求，并返回预定义的响应。
 
-## 为什么要使用Mock Server？
+### 为什么要使用Mock Server？
 
 1. 提高开发效率  
    在开发过程中，某些依赖的服务可能尚未准备就绪或不可访问。使用Mock server可以模拟这些服务的行为，使开发人员能够继续工作而不会受到阻碍。有助于前端
@@ -37,7 +37,7 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
    总的来说，Mock Server的使用可以提高开发效率，支持并行开发，模拟各种场景，隔离依赖服务，并用于性能测试和负载测试。它是一个强大的工具，帮助开发人
 员构建和测试应用程序，同时降低对实际服务的依赖性。
 
-## 如何搭建Mock server？
+### 如何搭建Mock server？
 搭Mock Server的方式有很多种，以下是一些常见的方式：
 
 1. 使用Mock Server框架：有许多专门用于搭建Mock Server的框架可供选择，例如MockServer、Prism、WireMock等。这些框架提供了简单易用的接口和配置
@@ -52,25 +52,25 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
 3. 使用API开发工具：一些API开发工具（如Postman、Swagger等）提供了Mock Server的功能。可以使用这些工具创建和管理Mock API，并根据需要配备设置请
 求和响应。
 
-# Stub Server
+## Stub Server
 
-## 什么是Stub Server
+### 什么是Stub Server
 
 服务存根是对实际服务的模拟，可用来在功能上替换测试环境中的服务。 存根服务器用于替换实际应用程序服务器。  
 从客户机应用程序的角度来看，服务存根看起来与其模拟的实际服务相同。 要使用服务存根来替换实际服务，必须能够将客户机应用程序中原始服务的  
 URL 替换为存根服务器的 URL。
 
-## 为什么要使用Stub Server？
+### 为什么要使用Stub Server？
 
-## 如何搭建Stub Server
+### 如何搭建Stub Server
 
-# HeartBeat使用Stubby4j搭建Stub Server
+## HeartBeat使用Stubby4j搭建Stub Server
 
 HeartBeat使用Stubby4j作为存根服务器来构建我们的服务。所有第三方服务都存根在一个存根服务器中。
 
-## 为何选择Stubby4j？
+### 为何选择Stubby4j？
 
-## 构建示例
+### 构建示例
 
 
 
