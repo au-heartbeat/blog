@@ -233,8 +233,12 @@ deploy-infra:
    ![alt 属性文本](./GitActionImages/DetailInfoAboutEachStep.png "DetailInfoAboutEachStep")
   - 以下是HeartBeat完整CI/CD workFlows
     ![alt 属性文本](./GitActionImages/BuildAndDeploy.png "BuildAndDeploy")
-  
-test 1 : "https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR"
-![测试2](https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR)
-<img src="https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR" alt="图片描述">
-<img alt="test 4" style="border-width:0" src="https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR" /></a>
+---
+
+featuredImage: "https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR"
+---
+---
+
+featuredImage: "https://photos.google.com/photo/AF1QipO6xf1vVczo4BlGEgjgxGM9C6iDTu_W829ID9vR"
+
+---
