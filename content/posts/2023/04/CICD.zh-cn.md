@@ -40,29 +40,27 @@ HeartBeat是我司的内部项目，其是一种帮助团队了解项目交付�
 ### HeartBeat code structure
 HeartBeat 项目中的所有代码在一个总的Heartbeat目录下,其中包括了前端代码，后端代码，stub(mock server)等。
 而.github目录下主要存了GitHub actions的流水线配置信息;docs目录存的主要是Heartbeat的官网信息文档,且不断在更新当中;ops下存了与基础设施相关的配置信息，包括管理AWS资源的cloudformation.yml文件,还有前端，后端，mock server(stub)的Dockerfile。讲项目结构的原因是我们的流水线的各个job是与其紧密相连的。
-- Heartbeat
-    - .github
+- ### Heartbeat
+    - **.github**
         - workflows
            - BuildAndDeploy.yml
            - Docs.yml
            - Welcome.yml
-    - backend
+    - **backend**
         - gradle
+        - java
+          - client
+          - config
+          - controller
+          - exception
+          - service
+        - test
+    - **docs**
         - src
-           - main
-               - java
-                   - client
-                   - config
-                   - controller
-                   - exception
-                   - service
-           - test
-    - docs
-        - src
-            - components
-            - layouts
-            - pages
-    - frontend
+          - components
+          - layouts
+          - pages
+    - **frontend**
         - test
         - cypress
         - src
@@ -73,24 +71,22 @@ HeartBeat 项目中的所有代码在一个总的Heartbeat目录下,其中包括
             - layouts
             - pages
             - utils
-    - ops
+    - **ops**
       - infra
         - cloudformation.yml
         - docker-compose.yml
         - Dockerfile.backend
         - Dockerfile.frontend
         - Dockerfile.stub
-    - stubs
+    - **stubs**
         - backend
           - buildkite
           - github
           - jira
         - frontend
-            - config
-                - board.json
-                - pipeline.json
-                - sourceControl.json
-            - exportPage
+          - board.json
+          - pipeline.json
+          - sourceControl.json
 
 ### 如何使用GitHub Actions部署CI/CD
 1. 在你的GitHub上的存储库中创建一个目录.github/workflows
