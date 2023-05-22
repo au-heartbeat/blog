@@ -222,3 +222,29 @@ deploy-infra:
   - 以下是HeartBeat完整CI/CD workFlows
     ![alt 属性文本](./GitActionImages/BuildAndDeploy.png "BuildAndDeploy")
 
+### 最终部署
+上述内容讲了我们是如何设计和触发GitHub Actions pipeline,那项目最终部署到了哪里呢？
+首先,针对HB项目，主要构建了三个镜像:后端镜像，前端镜像和mock server的镜像。且最终部署到了AWS云服务上。
+我们我们设计了两套环境，一个是e2e环境，一个是SIT环境，分别部署在两个AWS EC2上。e2e上包含前端，后端，mock server镜像，
+只不过后端容器服务连接的是mock server。SIT环境上包含两个镜像，前端和后端，且后端连接的是真实的第三方服务。两套EC2环境设计图如下所示。
+![alt 属性文本](./GitActionImages/EC2-design.png "EC2-design")  
+
+首先我们构建的镜像会存放到AWS的ECR(Elastic Container Registry)上,建立了三个repository分别存放前端，后端和mock server镜像。如下图所示。
+
+![alt 属性文本](./GitActionImages/ECR.png "ECR")  
+
+后端镜像仓库如下图所示。  
+
+![alt 属性文本](./GitActionImages/ECR-Backend.png "ECR-Backend")  
+
+
+
+最终构建好的镜像会被部署到下图所示的两个EC2实例上，第一个是SIT环境，另外一个是e2e环境。  
+
+![alt 属性文本](./GitActionImages/EC2-list.png "EC2-list")  
+
+例如我们进入到e2e的环境上，查看运行的容器如下图所示。总共有三个容器在运行，而容器的启动是由docker-compose
+编排控制的，通过传递不同的环境变量让后端服务连接mock server而非真实第三方服务。  
+
+![alt 属性文本](./GitActionImages/EC2-e2e.png "EC2-e2e")
+
