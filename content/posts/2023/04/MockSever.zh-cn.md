@@ -59,10 +59,11 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
 
 3. 使用API开发工具：一些API开发工具（如Postman、Swagger等）提供了Mock Server的功能。可以使用这些工具创建和管理Mock API，并根据需要配备设置请
 求和响应。
-****
+
 ### 常用框架
 
-1. **MockServer**  
+#### **MockServer**  
+1. 介绍
    MockServer 是一个开源模拟服务器框架，允许开发人员模拟 API 的行为。它为模拟 HTTP、HTTPS 和其他协议提供了一个强大而灵活的平台，使其适用于测试
 和开发目的。对于通过 HTTP 或 HTTPS 集成的任何系统，MockServer 可用作：
    - 模拟服务器：可以配置MockServer以针对不同的请求返回特定的响应。通过模拟真实系统的行为，MockServer能够提供一致和可控的响应，以便进行系统间的
@@ -86,9 +87,20 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
      <img src="mockserverImages/dynamical-response.png" alt="dynamical response" style="zoom:35%;" align=center/>
    - 当请求符合预期时返回无效响应或关闭连接  
      <img src="mockserverImages/invalid-response.png" alt="invalid response" style="zoom:35%;" align=center/>
-  
-2. xx
-3. xx
+
+2. 运行MockServer
+   MockServer 非常灵活，支持多种使用模式：
+   - 通过@Before或@After方法中的Java API以编程方式
+   - 在JUnit4测试中通过@Rule注释字段使用JUnit4 @Rule
+   - 通过@ExtendWith注释的JUnit5类使用JUnit5测试扩展
+   - 通过带@MockServerTest注释的测试类使用Spring Test Execution Listener
+   - 作为任何支持Docker的环境中的Docker容器
+   - 通过任何Kubernetes环境中的Helm图表
+   - 从命令行作为测试环境中的独立进程
+   - 通过Maven插件作为Maven构建周期的一部分
+   - 作为来自任何Node.js代码的Node.js (npm) 模块
+   - 作为Grunt构建周期的一部分的Grunt插件
+   - 作为现有应用程序服务器的可部署 WAR
 
 ## Stub Server
 
