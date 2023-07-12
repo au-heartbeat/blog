@@ -232,27 +232,28 @@ HeartBeat 是了解项目交付情况的工具，可帮助团队确定绩效指�
 
 1. docker-compose.yml
 
-     ```
+```yaml
     version: '3.4'
     services:
       stubs:
-      image: azagniotov/stubby4j:latest-jre11
-      volumes:
+        image: azagniotov/stubby4j:latest-jre11
+        volumes:
         - "./:/home/stubby4j/data"
-      container_name: stubby4j_jre11
-      ports:
+        container_name: stubby4j_jre11
+        ports:
         - 4323:4323
         - 8882:8882
         - 8891:8891
         - 7445:7445
-      environment:
-        YAML_CONFIG: stubs.yaml
-        LOCATION: 0.0.0.0
-        STUBS_PORT: 4323
-        ADMIN_PORT: 8891
-        STUBS_TLS_PORT: 7445
-        WITH_ARGS: "--enable_tls_with_alpn_and_http_2 --debug --watch"
-    ```
+        environment:
+          YAML_CONFIG: stubs.yaml
+          LOCATION: 0.0.0.0
+          STUBS_PORT: 4323
+          ADMIN_PORT: 8891
+          STUBS_TLS_PORT: 7445
+          WITH_ARGS: "--enable_tls_with_alpn_and_http_2 --debug --watch"
+  ```
+
    - image: 指定了 stubs 服务所使用的 Docker 镜像
 
    - container_name: 指定了容器的名称 
@@ -266,26 +267,28 @@ HeartBeat 是了解项目交付情况的工具，可帮助团队确定绩效指�
 通过以上配置，可以运行一个使用 stubby4j 的 Docker 容器，将容器内的端口映射到主机上，从而可以通过主机上的相应端口访问 stubby4j 服务。
 
 2. stubs.yml
-    ```
+
+``` yaml
    includes:
    ./stub-service.yaml
    ./backend/jira/jira-stubs.yaml
    ./backend/github/github-stubs.yaml
    ./backend/buildkite/buildkite-stubs.yaml
    ./frontend/stubs.yaml
-   ```
-    - ./stub-service.yaml： 配置了请求的响应规则
+  ```
 
-    - ./backend/jira/jira-stubs.yaml： 是用于配置与 Jira 后端相关的 stubs（模拟服务)
+  - ./stub-service.yaml： 配置了请求的响应规则
 
-    - ./backend/github/github-stubs.yaml： 是用于配置与 GitHub 后端相关的 stubs
+  - ./backend/jira/jira-stubs.yaml： 是用于配置与 Jira 后端相关的 stubs（模拟服务)
 
-    - ./backend/buildkite/buildkite-stubs.yaml： 是用于配置与 Buildkite 后端相关的 stubs。
+  - ./backend/github/github-stubs.yaml： 是用于配置与 GitHub 后端相关的 stubs
 
-    - ./frontend/stubs.yaml： 是用于配置前端相关的 stubs。
+  - ./backend/buildkite/buildkite-stubs.yaml： 是用于配置与 Buildkite 后端相关的 stubs
+
+  - ./frontend/stubs.yaml： 是用于配置前端相关的 stubs
 
 3. stub-service.yaml
-    ```
+    ``` yaml
     - request:
         method: GET
         url: /health
@@ -304,7 +307,7 @@ response 部分定义了响应的属性，包括响应状态码、响应体和�
 4. 具体服务配置
 
     以 Jira 为例，每个 stub 服务都需要 json 和 yaml 文件来指定具体服务的请求参数和响应内容。
-    ```
+    ``` yaml
     # Board Configuration
     - request:
         method: GET
