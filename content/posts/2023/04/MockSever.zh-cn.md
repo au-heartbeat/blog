@@ -66,10 +66,13 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
 1. 介绍
    MockServer 是一个开源模拟服务器框架，允许开发人员模拟 API 的行为。它为模拟 HTTP、HTTPS 和其他协议提供了一个强大而灵活的平台，使其适用于测试
 和开发目的。对于通过 HTTP 或 HTTPS 集成的任何系统，MockServer 可用作：
+
    - 模拟服务器：可以配置MockServer以针对不同的请求返回特定的响应。通过模拟真实系统的行为，MockServer能够提供一致和可控的响应，以便进行系统间的
 集成测试或开发。 
+
    - 代理服务器：MockServer可以作为代理服务器使用，记录并可选择性地修改请求和响应。它可以拦截客户端发送的请求，并将其转发到实际的目标服务器，同时
 还可以记录请求和响应的详细信息。这对于调试和监视请求的流量以及对请求和响应进行自定义处理非常有用。 
+
    - 同时作为代理和模拟服务器：MockServer可以同时充当代理服务器和模拟服务器。这意味着它可以根据请求的类型将其转发到实际的目标服务器或返回预定义的
 响应。这种灵活性使得可以在同一个系统中同时模拟一部分请求并代理另一部分请求，以满足不同的测试或开发需求。 
 
@@ -110,16 +113,226 @@ Mock Server是一种模拟服务器，用于模仿API的真实行为。它通过
 从客户机应用程序的角度来看，服务存根看起来与其模拟的实际服务相同。 要使用服务存根来替换实际服务，必须能够将客户机应用程序中原始服务的  
 URL 替换为存根服务器的 URL。
 
-### 为什么要使用Stub Server？
-
 ### 如何搭建Stub Server
 
-## HeartBeat使用Stubby4j搭建Stub Server
+要搭建一个 Stub Server 来模拟来自真实服务器的响应，可以按照以下步骤进行操作：
 
-HeartBeat使用Stubby4j作为存根服务器来构建我们的服务。所有第三方服务都存根在一个存根服务器中。
+1. 选择合适的 Stub Server 工具：例如 WireMock、MockServer、JSON Server、stubby4j 等。
 
-### 为何选择Stubby4j？
+2. 定义预期的请求和响应：在搭建 Stub Server 之前，需要明确要模拟的请求和对应的响应。定义请求的路径、HTTP 方法、请求头、请求体等信息，以及预期的响应状态码、响应头、响应体等信息。
+
+3. 配置 Stub Server：根据你选择的工具和其提供的文档，配置 Stub Server 来定义请求和响应的规则。通常可以使用配置文件、代码或 API 接口进行配置。
+
+4. 启动 Stub Server：根据你选择的工具，启动 Stub Server。它会监听指定的端口，等待请求到达并返回预定义的响应。
+
+5. 使用 Stub Server 进行测试：通过将客户端请求重定向到 Stub Server，可以测试客户端在与真实服务器交互时的行为。你可以在客户端配置中指定 Stub Server 的地址和端口，或者使用代理工具将请求重定向到 Stub Server。
+
+通过搭建 Stub Server，你可以模拟来自真实服务器的响应，而无需实际发送请求到网络。这样可以方便地进行本地开发、测试和调试，而不受真实服务器的限制。
+
+## HeartBeat 使用 stubby4j 搭建Stub Server
+
+HeartBeat使用 stubby4j 作为存根服务器来构建我们的服务。所有第三方服务都存根在一个存根服务器中。
+
+### 为何选择 stubby4j ？
+
+   - 简单易用，配置使用YAML或JSON文件，对于简单的模拟场景可以快速上手。
+   - 专注于HTTP和HTTPS服务的模拟和stubbing，可以快速创建stub并定义所需的响应。
+   - 支持动态响应生成和JavaScript注入。
+   - 可以运行在本地计算机上，不需要额外的服务器或环境。
+
+总的来说，stubby4j更加简单易用，适合快速创建简单的模拟场景。
+
+### 使用stubby4j HTTP 存根服务器的优点
+
+1. 模拟来自真实服务器的响应并且不关心（或不能）通过网络发送请求
+
+2. 在基于 Docker 的微服务架构中存根外部 Web 服务（在本地开发和测试时）
+
+3. 当您依赖的外部 API 不存在或不完整时，避免对生产力产生负面影响
+
+4. 模拟实际远程 API 无法可靠生成的 Web 服务的边缘情况和/或故障模式
+
+5. 错误注入，在相同 URI 上的 X 次良好响应之后，Web 服务可以得到错误的响应
+
+6. 验证用户的应用程序在 WebSocket 服务器推送时的行为是否符合预期
+
+7. 验证用户代码是否使用所有必需的参数和/或标头发出 HTTP/1.1 或 HTTP/2（通过 TLS）请求
+
+8. 验证用户代码是否正确处理 HTTP 响应错误代码
+
+### 运行 Stub Server
+
+#### 使用 JAR 存档运行
+
+1. 下载 stubby4j：下载最新版本的 stubby4j [latest stubby4j version](https://search.maven.org/search?q=g:io.github.azagniotov%20AND%20a:stubby4j)。
+
+2. 编写存根配置：创建一个 YAML 或 JSON 文件，用于定义存根的配置。在配置文件中，定义请求的 URL、HTTP 方法、请求头、请求体以及对应的响应。
+
+3. 配置存根文件：将编写好的存根配置文件保存在合适的位置，以便 stubby4j 可以读取并加载配置。
+
+4. 启动 stubby4j：使用命令行或脚本运行 stubby4j，指定配置文件的路径。例如，使用以下命令行启动 stubby4j：
+   ```
+   java -jar stubby4j.jar -d config.yaml
+   ```
+
+5. 验证 stub server：一旦 stubby4j 启动成功，通过访问指定的端口和路径来验证 stub server 是否正常工作。
+
+#### 使用 docker-compose 运行
+
+要使用Docker Compose运行stubby4j，你可以按照以下步骤进行操作：
+
+1. 安装Docker和Docker Compose
+
+2. 创建一个名为`docker-compose.yml`的文件，指定镜像、端口映射、文件挂载以及启动命令等
+
+3. 编写存根配置：创建一个 YAML 或 JSON 文件，用于定义存根的配置
+
+4. 启动 stubby4j：切换到包含`docker-compose.yml`文件的目录，运行以下命令启动stubby4j容器：
+   ```
+   docker-compose up -d
+   ```
+5. 验证 Stub Server：通过指定路径和端口来访问stubby4j的Web界面，并通过该界面管理和测试API存根。
+
+以上步骤将帮助你使用Docker Compose运行stubby4j，并通过配置文件定义API存根。你可以根据自己的需要修改配置文件，并在容器中重新启动stubby4j来更新配置。
 
 ### 构建示例
 
+HeartBeat 是了解项目交付情况的工具，可帮助团队确定绩效指标，从而推动持续改进并提高团队生产力和效率。
+其中**关键指标有：**
+1. Velocity
+2. Cycle Time
+3. Classification
+4. Deployment Frequency
+5. Meantime To Recovery
+6. Change Failure Rate
 
+为了计算上述指标，系统需要获取到Jira、BuildKite、Github 的相关信息。在开发过程中，为了实现前后端分离开发，
+构建了 Stub Server，用于存根第 3 方服务（Jira、BuildKite 和 Github），以促进开发进程和端到端测试。
+
+#### **HeartBeat stub 结构**
+   - **stubs**
+     - backend
+        - buildkite
+        - github
+        - jira
+     - frontend
+       - config
+         - board.json
+         - pipeline.json
+         - sourceControl.json
+       - exportPage
+       - stubs.yml
+     - docker-compose.yml
+     - stub-service.yaml
+     - stubs.yml
+
+如上所示，HeartBeat 项目中的所有关于 Stub Server 的代码在 `stub` 目录下,包括了backend，frontend 和 配置文件。
+
+#### 服务配置
+
+1. docker-compose.yml
+
+     ```
+    version: '3.4'
+    services:
+      stubs:
+      image: azagniotov/stubby4j:latest-jre11
+      volumes:
+        - "./:/home/stubby4j/data"
+      container_name: stubby4j_jre11
+      ports:
+        - 4323:4323
+        - 8882:8882
+        - 8891:8891
+        - 7445:7445
+      environment:
+        YAML_CONFIG: stubs.yaml
+        LOCATION: 0.0.0.0
+        STUBS_PORT: 4323
+        ADMIN_PORT: 8891
+        STUBS_TLS_PORT: 7445
+        WITH_ARGS: "--enable_tls_with_alpn_and_http_2 --debug --watch"
+    ```
+   - image: 指定了 stubs 服务所使用的 Docker 镜像
+
+   - container_name: 指定了容器的名称 
+
+   - volumes: 指定了容器与主机之间的文件卷映射关系
+
+   - ports: 配置了容器与主机之间的端口映射关系
+
+   - environment: 设置了容器的环境变量
+
+通过以上配置，可以运行一个使用 stubby4j 的 Docker 容器，将容器内的端口映射到主机上，从而可以通过主机上的相应端口访问 stubby4j 服务。
+
+2. stubs.yml
+    ```
+   includes:
+   ./stub-service.yaml
+   ./backend/jira/jira-stubs.yaml
+   ./backend/github/github-stubs.yaml
+   ./backend/buildkite/buildkite-stubs.yaml
+   ./frontend/stubs.yaml
+   ```
+    - ./stub-service.yaml： 配置了请求的响应规则
+
+    - ./backend/jira/jira-stubs.yaml： 是用于配置与 Jira 后端相关的 stubs（模拟服务)
+
+    - ./backend/github/github-stubs.yaml： 是用于配置与 GitHub 后端相关的 stubs
+
+    - ./backend/buildkite/buildkite-stubs.yaml： 是用于配置与 Buildkite 后端相关的 stubs。
+
+    - ./frontend/stubs.yaml： 是用于配置前端相关的 stubs。
+
+3. stub-service.yaml
+    ```
+    - request:
+        method: GET
+        url: /health
+      response:
+        status: 200
+        body: >
+          {"status": "OK"}
+        headers:
+          content-type: application/json
+   ```
+该配置文件定义了一个针对 /health 路径的 GET 请求的响应规则。
+request 部分定义了请求的属性，包括请求方法和请求 URL。
+response 部分定义了响应的属性，包括响应状态码、响应体和响应头。
+这段配置表示当收到 /health 路径的 GET 请求时，stubby4j 会返回一个状态码为 200 的响应，响应体为 {"status": "OK"}，同时设置响应头中的 content-type 为 application/json。
+
+4. 具体服务配置
+
+    以 Jira 为例，每个 stub 服务都需要 json 和 yaml 文件来指定具体服务的请求参数和响应内容。
+    ```
+    # Board Configuration
+    - request:
+        method: GET
+        url: /rest/agile/1.0/board/1963/configuration
+
+      response:
+        headers:
+        content-type: application/json
+        status: 200
+        file: ./backend/jira/jsons/jira.board.1963.configuration.json
+    ```
+    该文件配置了针对 `/rest/agile/1.0/board/1963/configuration` 路径的GET请求的响应规则。
+    request 部分定义了请求的属性，包括请求方法和请求 URL。
+    response 部分定义了响应的属性，包括响应头、响应状态码和响应体。
+    file 属性指定了响应体的内容来自于指定的文件。在上述例子中，响应体的内容将从 `./backend/jira/jsons/jira.board.1963.configuration.json` 文件中读取。
+    当收到`/rest/agile/1.0/board/1963/configuration` 路径的 GET 请求时，stubby4j 会返回一个状态码为 200 的响应，
+    响应头中的 content-type 设置为 application/json，响应体的内容将从`jira.board.1963.configuration.json`文件中读取并返回。
+
+#### 服务启动
+1. 导航到 `/Heartbeat/stubs` 文件夹
+2. 执行以下命令：
+     ````
+     docker-compose up -d
+     ````
+3. 导航到以 http://localhost:4323/ 开头的URL
+
+#### 如何新建一个stub api
+1. 在 `stub/服务名称/jsons` 文件夹中创建响应的json 文件
+2. 创建 `stub/服务名称/xxx-stubs.yaml` 文件来配置来映射存根请求和响应
+3. 在`stub/stubs.yml`引入新的配置文件
+4. 最后，创建PR时，将标签"[stub]"添加到标题信息中，触发mockserver的重新部署
